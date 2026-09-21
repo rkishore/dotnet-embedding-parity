@@ -93,6 +93,48 @@ Of the 19 uninformed predictions, 13 were met, 1 was half refuted, 4 were refute
 was open (LM4). Every refutation came from tokenization, which reading the libraries'
 pooling code could not have caught.
 
+## `Microsoft.ML.Tokenizers` under invariant globalization
+
+_Added 2026-09-21. Predictions MT1–MT7 in [`PREDICTIONS.md`](PREDICTIONS.md) were committed
+in this repository before the probe was written. Package 2.0.0, .NET 10.0.12, macOS arm64.
+Full tables: [`results/mltokenizers/accent-summary.md`](results/mltokenizers/accent-summary.md)
+and, over all 49 inputs of `tokenizer-probes.json`,
+[`results/mltokenizers/probes-summary.md`](results/mltokenizers/probes-summary.md)._
+
+`BertTokenizer.Create(vocab, options)` on its own, with no library around it, checked by
+token id against Hugging Face and scored by cosine after embedding both id sequences with
+the reference pooling. `"\u00e9".Normalize(FormD)` returned 2 code units under ICU and 1
+under invariant mode, recorded by the probe process itself.
+
+| probe | ICU, default | ICU, `RemoveNonSpacingMarks` | invariant, default | invariant, `RemoveNonSpacingMarks` |
+|---|--:|--:|--:|--:|
+| `accents` (precomposed) | **0.333027** | = | **0.333027** | **0.333027** |
+| `accents_nfd` (decomposed) | **0.333027** | = | **0.333027** | = |
+| `accents_upper` | **0.089375** | = | **0.089375** | **0.089375** |
+| `french` | **0.545866** | = | **0.545866** | **0.545866** |
+| `spanish` | **0.502484** | = | **0.502484** | **0.502484** |
+| `german` | **0.572320** | = | **0.572320** | **0.572320** |
+| `hangul` | **0.458831** | **0.458831** | **0.458831** | **0.458831** |
+| `ascii` | = | = | = | = |
+
+`=` means token ids identical to Hugging Face's. Under invariant globalization,
+`RemoveNonSpacingMarks = true` produces exactly the ids of the default options on every
+precomposed probe: the option silently does nothing, and nothing throws. It still works on
+text that arrives already decomposed, because the mark test (`CharUnicodeInfo`) does not
+depend on ICU; only the decomposition does. The `accents` value, 0.333027, is the value
+measured for ElBruno and for SK under invariant mode. For SK this is consistent with the
+same mechanism, but SK's tokenizer was not read or instrumented here.
+
+| id | prediction | outcome |
+|---|---|---|
+| MT1 | ICU + option: every Latin-accent probe matches | **met** |
+| MT2 | invariant + option: precomposed probes fail, ids identical to option off, `accents` 0.333027, no exception | **met** |
+| MT3 | invariant + option: `accents_nfd` matches | **met** |
+| MT4 | `hangul` fails in all four, including ICU + option | **met**: `한국어` → `[UNK]`, where Hugging Face gives conjoining jamo; consistent with the closing `Normalize(FormC)` recomposing them |
+| MT5 | option off: no accented probe matches in either mode | **met** |
+| MT6 | `ascii` matches in all four | **met** |
+| MT7 | over `tokenizer-probes.json`, ICU and invariant differ on `accents` and `hangul` only | **refuted in part**: they differ on `accents` only. `hangul` fails identically in both modes, which MT4 itself implied; the two predictions contradicted each other |
+
 ## A harness error, caught and kept
 
 The first run set `InvariantGlobalization=true` in `Directory.Build.props`, a habit rather
@@ -112,7 +154,8 @@ container images commonly run that way.
 
 ## Reproduce
 
-From the repository root. `model/fetch.sh` downloads the pinned `model.onnx` and checks
+From the repository root, in bash: `$PY` relies on word splitting, which zsh does not do.
+`model/fetch.sh` downloads the pinned `model.onnx` and checks
 its sha256 against `results/reference.json`. ElBruno and LMSupply download the model
 themselves into `.cache/`.
 
@@ -136,9 +179,33 @@ dotnet run --project elbruno -c Release -p:InvariantGlobalization=true -- texts.
 dotnet run --project lmsupply -c Release -p:InvariantGlobalization=true -- texts.json .cache/lmsupply $I/lmsupply.json
 python3 compare.py results/reference.json $I/{sk,elbruno,lmsupply}.json > $I/summary.md
 
+# Token-level attribution: each library's own ids re-embedded, and tokenizer variants
+E=.cache/elbruno/sentence-transformers_all-MiniLM-L6-v2
+L=.cache/lmsupply/models--sentence-transformers--all-MiniLM-L6-v2/snapshots/main/onnx
+dotnet run --project elbruno -c Release -- tokens texts.json $E results/tokens-elbruno.json
+dotnet run --project lmsupply -c Release -- tokens texts.json $L results/tokens-lmsupply.json
+for lib in elbruno lmsupply; do
+  $PY reference/verify_tokens.py --model model/model.onnx --vocab model/vocab.txt --reference results/reference.json \
+    --results results/$lib.json --tokens results/tokens-$lib.json --out results/token-diff-$lib.json
+done
+$PY reference/attribute.py --model model/model.onnx --vocab model/vocab.txt --texts texts.json \
+  --results $I/sk.json results/elbruno.json results/lmsupply.json --out results/attribution.json
+
 # LMSupply after the fix; delete lmsupply/bin and lmsupply/obj first
 dotnet run --project lmsupply -c Release -p:LmSupplyVersion=0.70.0 -- texts.json .cache/lmsupply results/lmsupply-0.70.0.json
 
 # Microsoft.ML.Tokenizers BertTokenizer on its own
 dotnet run --project mltokenizers -c Release -- model/vocab.txt
+
+# ... and by token id against Hugging Face, under both globalization modes
+O=results/mltokenizers
+$PY reference/tokenizer_ids.py --vocab model/vocab.txt --probes mltokenizers/accent-probes.json --out $O/accent-ids.json
+dotnet run --project mltokenizers -c Release -- ids model/vocab.txt mltokenizers/accent-probes.json $O/accent-icu.json
+dotnet run --project mltokenizers -c Release -p:InvariantGlobalization=true -- ids model/vocab.txt mltokenizers/accent-probes.json $O/accent-invariant.json
+$PY reference/score_ids.py --model model/model.onnx --hf $O/accent-ids.json \
+  --runs $O/accent-icu.json $O/accent-invariant.json --out $O/accent-scores.json > $O/accent-summary.md
+dotnet run --project mltokenizers -c Release -- ids model/vocab.txt tokenizer-probes.json $O/probes-icu.json
+dotnet run --project mltokenizers -c Release -p:InvariantGlobalization=true -- ids model/vocab.txt tokenizer-probes.json $O/probes-invariant.json
+$PY reference/score_ids.py --model model/model.onnx --hf results/tokenizer-ids.json \
+  --runs $O/probes-icu.json $O/probes-invariant.json --out $O/probes-scores.json > $O/probes-summary.md
 ```

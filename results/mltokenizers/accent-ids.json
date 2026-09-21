@@ -1,0 +1,248 @@
+{
+  "recipe": "tokenizers BertWordPieceTokenizer(lowercase=True), add_special_tokens default",
+  "versions": {
+    "tokenizers": "0.21.1"
+  },
+  "probes": [
+    {
+      "id": "accents",
+      "text": "Café crème brûlée in São Paulo, naïve résumé",
+      "token_ids": [
+        101,
+        7668,
+        13675,
+        21382,
+        7987,
+        9307,
+        2063,
+        1999,
+        7509,
+        9094,
+        1010,
+        15743,
+        13746,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "cafe",
+        "cr",
+        "##eme",
+        "br",
+        "##ule",
+        "##e",
+        "in",
+        "sao",
+        "paulo",
+        ",",
+        "naive",
+        "resume",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "accents_nfd",
+      "text": "Café crème brûlée in São Paulo, naïve résumé",
+      "token_ids": [
+        101,
+        7668,
+        13675,
+        21382,
+        7987,
+        9307,
+        2063,
+        1999,
+        7509,
+        9094,
+        1010,
+        15743,
+        13746,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "cafe",
+        "cr",
+        "##eme",
+        "br",
+        "##ule",
+        "##e",
+        "in",
+        "sao",
+        "paulo",
+        ",",
+        "naive",
+        "resume",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "accents_upper",
+      "text": "ÉCOLE ÉLÉMENTAIRE",
+      "token_ids": [
+        101,
+        12431,
+        5783,
+        14737,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "ecole",
+        "element",
+        "##aire",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "french",
+      "text": "Où est la bibliothèque ? Je préfère le café.",
+      "token_ids": [
+        101,
+        15068,
+        9765,
+        2474,
+        12170,
+        16558,
+        25185,
+        5369,
+        4226,
+        1029,
+        15333,
+        9544,
+        2063,
+        3393,
+        7668,
+        1012,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "ou",
+        "est",
+        "la",
+        "bi",
+        "##bl",
+        "##iot",
+        "##he",
+        "##que",
+        "?",
+        "je",
+        "prefer",
+        "##e",
+        "le",
+        "cafe",
+        ".",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "spanish",
+      "text": "El niño comió una piña en Málaga",
+      "token_ids": [
+        101,
+        3449,
+        20801,
+        4012,
+        3695,
+        14477,
+        9231,
+        2050,
+        4372,
+        27382,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "el",
+        "nino",
+        "com",
+        "##io",
+        "una",
+        "pin",
+        "##a",
+        "en",
+        "malaga",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "german",
+      "text": "Grüße aus München, schöne Straße",
+      "token_ids": [
+        101,
+        24665,
+        2226,
+        17499,
+        17151,
+        25802,
+        1010,
+        8040,
+        27406,
+        2358,
+        27807,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "gr",
+        "##u",
+        "##ße",
+        "aus",
+        "munchen",
+        ",",
+        "sc",
+        "##hone",
+        "st",
+        "##raße",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "hangul",
+      "text": "한국어 text",
+      "token_ids": [
+        101,
+        1469,
+        30006,
+        30021,
+        29991,
+        30014,
+        30020,
+        29999,
+        30008,
+        3793,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "ᄒ",
+        "##ᅡ",
+        "##ᆫ",
+        "##ᄀ",
+        "##ᅮ",
+        "##ᆨ",
+        "##ᄋ",
+        "##ᅥ",
+        "text",
+        "[SEP]"
+      ]
+    },
+    {
+      "id": "ascii",
+      "text": "hello world",
+      "token_ids": [
+        101,
+        7592,
+        2088,
+        102
+      ],
+      "tokens": [
+        "[CLS]",
+        "hello",
+        "world",
+        "[SEP]"
+      ]
+    }
+  ]
+}
