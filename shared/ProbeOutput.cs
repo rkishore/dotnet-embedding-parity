@@ -136,8 +136,14 @@ public static class ProbeOutput
         Console.WriteLine($"wrote token ids for {tokens.Count} texts to {path}");
     }
 
+    /// <summary>
+    /// Every runner serialises through here, so this is the one place that keeps absolute
+    /// paths out of committed results: <c>ModelFile</c> is rewritten relative to the
+    /// repository root, or reduced to its file name when it lies outside the repository.
+    /// </summary>
     public static void Write(string path, Result result)
     {
+        result = result with { ModelFile = RepositoryRelative(result.ModelFile) };
         Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(path)) ?? ".");
         File.WriteAllText(path, JsonSerializer.Serialize(result, JsonOptions));
         var failures = 0;
@@ -149,5 +155,34 @@ public static class ProbeOutput
         Console.WriteLine(
             $"{result.Library}: {result.Single.Count - failures}/{result.Single.Count} single ok, " +
             $"batch {(result.Batch.Error is null ? "ok" : "failed: " + result.Batch.Error)}, model {result.ModelFile}");
+    }
+
+    /// <summary>ElBruno's <c>ModelFile</c> may join several paths with ';'; each is rewritten.</summary>
+    private static string? RepositoryRelative(string? modelFile)
+    {
+        if (modelFile is null)
+            return null;
+        var root = RepositoryRoot();
+        var parts = modelFile.Split(';');
+        for (int i = 0; i < parts.Length; i++)
+        {
+            var full = Path.GetFullPath(parts[i]);
+            var relative = root is null ? null : Path.GetRelativePath(root, full);
+            parts[i] = relative is null || relative.StartsWith("..", StringComparison.Ordinal) || Path.IsPathRooted(relative)
+                ? "<outside repository>/" + Path.GetFileName(full)
+                : relative.Replace(Path.DirectorySeparatorChar, '/');
+        }
+        return string.Join(';', parts);
+    }
+
+    /// <summary>The nearest ancestor of the build output that holds Directory.Build.props.</summary>
+    private static string? RepositoryRoot()
+    {
+        for (var dir = new DirectoryInfo(AppContext.BaseDirectory); dir is not null; dir = dir.Parent)
+        {
+            if (File.Exists(Path.Combine(dir.FullName, "Directory.Build.props")))
+                return dir.FullName;
+        }
+        return null;
     }
 }
