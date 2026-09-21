@@ -8,3 +8,9 @@ against. Source paths cited in the predictions and results are relative to these
 | SK `Connectors.Onnx` | github.com/microsoft/semantic-kernel | `ca40aa7` (2026-09-11) |
 | LMSupply.Embedder | github.com/iyulab/lm-supply | `0858327` (= 0.68.0) |
 | ElBruno.LocalEmbeddings | github.com/elbruno/elbruno.localembeddings | `5583800` (2026-08-17; csproj says 1.6.0, NuGet 1.6.1 set at publish) |
+
+Read for the `Microsoft.ML.Tokenizers` invariant-globalization prediction (MT1–MT7):
+
+| subject | repository | commit |
+|---|---|---|
+| `Microsoft.ML.Tokenizers` 2.0.0 | github.com/dotnet/machinelearning | `efefa92` (tag v5.0.0; the commit in the 2.0.0 package's nuspec) |

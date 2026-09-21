@@ -85,3 +85,43 @@ a fixed 512, masked mean, `NormalizeEmbeddings = false`, `Microsoft.ML.Tokenizer
   the library claims sentence-transformers parity.
 - **Divergence only on `accents` or `cjk_emoji`** is a tokenizer defect, and is reportable
   because the model's `tokenizer_config.json` specifies the behaviour.
+
+## `Microsoft.ML.Tokenizers` under invariant globalization
+
+_Recorded 2026-09-21 in this repository, committed before the probe below was written or
+run. Not blind: the SK invariant-mode result above, and `mltokenizers/`'s ICU output for
+`accents`, were already known. The mechanism is read from `BertNormalizer.cs` at the
+commit in [`SOURCES.md`](SOURCES.md): with `RemoveNonSpacingMarks = true` it calls
+`Normalize(FormD)` (line 38), drops `NonSpacingMark` characters (line 77), and always
+finishes with `Normalize(FormC)` (line 116)._
+
+Package 2.0.0, `BertTokenizer.Create(vocab, options)`, over
+[`mltokenizers/accent-probes.json`](mltokenizers/accent-probes.json). "Matches" means
+token ids identical to Hugging Face's `BertWordPieceTokenizer(lowercase=True)`. Four
+configurations: `RemoveNonSpacingMarks` false or true, under ICU or with
+`InvariantGlobalization=true`.
+
+- **MT1.** Under ICU with `RemoveNonSpacingMarks = true`, every Latin-accent probe matches:
+  `accents`, `accents_nfd`, `accents_upper`, `french`, `spanish`, `german`. High confidence.
+- **MT2.** Under invariant globalization with `RemoveNonSpacingMarks = true`, the
+  precomposed probes (`accents`, `accents_upper`, `french`, `spanish`, `german`) do
+  **not** match, and their ids are identical to the same mode's ids with the option
+  off: the option silently does nothing. `accents` scores 0.333027 end to end, the value
+  measured for ElBruno and for SK under invariant mode. Nothing throws. High confidence:
+  `Normalize(FormD)` returns its input unchanged in invariant mode, so `é` never becomes
+  `e` + U+0301 and there is no mark to drop.
+- **MT3.** Under invariant globalization with the option on, `accents_nfd` **does**
+  match. The input already carries separate combining marks, and the `NonSpacingMark`
+  test uses `CharUnicodeInfo`, which ships its own data and works in invariant mode.
+  Medium confidence. If it holds, the failure depends on the input's normalisation form
+  as well as on the deployment image.
+- **MT4.** `hangul` does not match in any of the four configurations, including ICU with
+  the option on: `FormD` splits the syllables into conjoining jamo, which are letters and
+  are kept, and the closing `Normalize(FormC)` recomposes them into syllables that are not
+  in the vocabulary. Medium–low confidence.
+- **MT5.** With the option off, no accented probe matches in either mode. High confidence;
+  this is ElBruno's configuration.
+- **MT6.** `ascii` matches in all four configurations. High confidence.
+- **MT7.** Over the 49 inputs of `tokenizer-probes.json`, ICU and invariant mode produce
+  identical ids for every probe except those containing a character with a canonical
+  decomposition: `accents` and `hangul`. Medium confidence.
