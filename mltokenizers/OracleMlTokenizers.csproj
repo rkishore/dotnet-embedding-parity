@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Isolates Microsoft.ML.Tokenizers BertTokenizer behaviour from any library around it. -->
+  <PropertyGroup>
+    <!-- Override with -p:MlTokenizersVersion=... to check a newer release; delete bin/ and obj/ between versions. -->
+    <MlTokenizersVersion Condition="'$(MlTokenizersVersion)' == ''">2.0.0</MlTokenizersVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.Tokenizers" Version="$(MlTokenizersVersion)" />
+  </ItemGroup>
+</Project>

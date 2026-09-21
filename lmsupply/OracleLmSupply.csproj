@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Override with -p:LmSupplyVersion=... to check a newer release; delete bin/ and obj/ between versions. -->
+    <LmSupplyVersion Condition="'$(LmSupplyVersion)' == ''">0.68.0</LmSupplyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="LMSupply.Embedder" Version="$(LmSupplyVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../shared/ProbeOutput.cs" Link="ProbeOutput.cs" />
+  </ItemGroup>
+</Project>

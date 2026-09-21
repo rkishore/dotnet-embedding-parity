@@ -1,2 +1,6 @@
 # Model and runtime downloads made by the libraries under test.
 .cache/
+# Build output, and the model file that model/fetch.sh downloads.
+bin/
+obj/
+model/model.onnx

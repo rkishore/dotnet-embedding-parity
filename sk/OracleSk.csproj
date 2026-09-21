@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Onnx" Version="1.80.1-alpha" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.12" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="../shared/ProbeOutput.cs" Link="ProbeOutput.cs" />
+  </ItemGroup>
+</Project>
