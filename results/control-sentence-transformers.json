@@ -1,0 +1,59 @@
+{
+  "sentence_transformers": "6.0.1",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "max_seq_length": 256,
+  "min_cosine": 0.99999,
+  "passed": true,
+  "rows": [
+    {
+      "id": "short",
+      "cosine": 1.0000000308418888,
+      "max_abs_diff": 2.1047890186309814e-07
+    },
+    {
+      "id": "medium",
+      "cosine": 1.0000000656159003,
+      "max_abs_diff": 1.6461126506328583e-07
+    },
+    {
+      "id": "query",
+      "cosine": 1.0000000288677926,
+      "max_abs_diff": 1.5459954738616943e-07
+    },
+    {
+      "id": "case_punct",
+      "cosine": 0.9999999772367907,
+      "max_abs_diff": 1.471489667892456e-07
+    },
+    {
+      "id": "accents",
+      "cosine": 0.9999999881885131,
+      "max_abs_diff": 1.4901161193847656e-07
+    },
+    {
+      "id": "cjk_emoji",
+      "cosine": 1.000000013890291,
+      "max_abs_diff": 1.4901161193847656e-07
+    },
+    {
+      "id": "whitespace",
+      "cosine": 1.0000000430706675,
+      "max_abs_diff": 1.341104507446289e-07
+    },
+    {
+      "id": "passage",
+      "cosine": 1.0000000350354141,
+      "max_abs_diff": 1.3783574104309082e-07
+    },
+    {
+      "id": "over_256",
+      "cosine": 1.000000062721618,
+      "max_abs_diff": 1.1641532182693481e-07
+    },
+    {
+      "id": "empty",
+      "cosine": 0.999999962447576,
+      "max_abs_diff": 3.427267074584961e-07
+    }
+  ]
+}
