@@ -1,0 +1,55 @@
+{
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "texts": [
+    {
+      "id": "short",
+      "why": "two common words; the probe that catches fixed-length padding",
+      "text": "hello world"
+    },
+    {
+      "id": "medium",
+      "why": "existing oracle-gate probe from bench/scripts/_preflight_cosine.py",
+      "text": "benchmark test sentence for embedding generation"
+    },
+    {
+      "id": "query",
+      "why": "search-query shape, the online path",
+      "text": "how do lighthouse keepers wind the clockwork"
+    },
+    {
+      "id": "case_punct",
+      "why": "upper case, em dash, apostrophe, ?! run: basic tokenisation and lowercasing",
+      "text": "The QUICK brown fox — didn't jump over the lazy dog?!"
+    },
+    {
+      "id": "accents",
+      "why": "combining accents; the model's tokenizer strips them when lowercasing",
+      "text": "Café crème brûlée in São Paulo, naïve résumé"
+    },
+    {
+      "id": "cjk_emoji",
+      "why": "CJK characters are split individually; emoji maps to [UNK]",
+      "text": "東京タワーの夜景 🚀 is beautiful"
+    },
+    {
+      "id": "whitespace",
+      "why": "leading, trailing and internal tabs and newlines",
+      "text": "  line one\n\tline two  "
+    },
+    {
+      "id": "passage",
+      "why": "realistic passage, 109 tokens: below the model's max_seq_length of 256",
+      "text": "Lighthouses were once staffed by keepers who trimmed wicks, wound clockwork, and logged every passing ship through long winter nights. Automation arrived gradually: electric lamps replaced oil, rotating lenses were driven by motors instead of weights, and remote monitoring made resident crews unnecessary. Many towers now serve as museums, while their modern successors are small solar-powered beacons mounted on steel frames. Mariners still rely on the characteristic flash pattern of each light to fix their position when satellite navigation fails, which is why authorities publish detailed light lists every year."
+    },
+    {
+      "id": "over_256",
+      "why": "above the model's max_seq_length of 256; the libraries default to 512",
+      "text": "Lighthouses were once staffed by keepers who trimmed wicks, wound clockwork, and logged every passing ship through long winter nights. Automation arrived gradually: electric lamps replaced oil, rotating lenses were driven by motors instead of weights, and remote monitoring made resident crews unnecessary. Many towers now serve as museums, while their modern successors are small solar-powered beacons mounted on steel frames. Mariners still rely on the characteristic flash pattern of each light to fix their position when satellite navigation fails, which is why authorities publish detailed light lists every year. Lighthouses were once staffed by keepers who trimmed wicks, wound clockwork, and logged every passing ship through long winter nights. Automation arrived gradually: electric lamps replaced oil, rotating lenses were driven by motors instead of weights, and remote monitoring made resident crews unnecessary. Many towers now serve as museums, while their modern successors are small solar-powered beacons mounted on steel frames. Mariners still rely on the characteristic flash pattern of each light to fix their position when satellite navigation fails, which is why authorities publish detailed light lists every year. Lighthouses were once staffed by keepers who trimmed wicks, wound clockwork, and logged every passing ship through long winter nights. Automation arrived gradually: electric lamps replaced oil, rotating lenses were driven by motors instead of weights, and remote monitoring made resident crews unnecessary. Many towers now serve as museums, while their modern successors are small solar-powered beacons mounted on steel frames. Mariners still rely on the characteristic flash pattern of each light to fix their position when satellite navigation fails, which is why authorities publish detailed light lists every year."
+    },
+    {
+      "id": "empty",
+      "why": "edge case: [CLS][SEP] only",
+      "text": ""
+    }
+  ]
+}
