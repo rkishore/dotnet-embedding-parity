@@ -123,7 +123,9 @@ precomposed probe: the option silently does nothing, and nothing throws. It stil
 text that arrives already decomposed, because the mark test (`CharUnicodeInfo`) does not
 depend on ICU; only the decomposition does. The `accents` value, 0.333027, is the value
 measured for ElBruno and for SK under invariant mode. For SK this is consistent with the
-same mechanism, but SK's tokenizer was not read or instrumented here.
+same mechanism, but SK's tokenizer was not read or instrumented here. Reported as
+[dotnet/machinelearning#7728](https://github.com/dotnet/machinelearning/issues/7728) on
+2026-09-22.
 
 | id | prediction | outcome |
 |---|---|---|
