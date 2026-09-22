@@ -29,16 +29,26 @@ results, the predictions written before they ran, and two follow-ups: a measurem
 - **The author's own library had the same defects as ElBruno.** Its source and results are
   not in this repository.
 - **Under invariant globalization, `String.Normalize(FormD)` returns its input unchanged,
-  by [documented design](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md#string-normalization).**
+  by [documented design](https://github.com/dotnet/runtime/blob/6f4751a142ca0e879d60cb4091356bb9d346143e/docs/design/features/globalization-invariant-mode.md#string-normalization).**
   A tokenizer that strips accents through it degrades silently. SK is measured. So is
   `Microsoft.ML.Tokenizers` 2.0.0 with `RemoveNonSpacingMarks = true`: under invariant mode
   the option does nothing on precomposed text, so `Café crème brûlée in São Paulo, naïve
   résumé` scores 0.333027, the same as with the option off. On text that arrives already
   decomposed, it still works.
 
-Invariant globalization is the default in the chiseled and Alpine .NET container images
-and in Native AOT templates. So the same code can be exact on a developer's machine and
-wrong in production.
+Invariant globalization is common where .NET is deployed:
+
+- **Container images.** Microsoft's Alpine and Ubuntu Chiseled .NET images "do not include
+  `icu` or `tzdata`, meaning that these images only work with apps that are configured for
+  globalization-invariant mode". Their `extra` variants add ICU
+  ([`dotnet-docker` image variants](https://github.com/dotnet/dotnet-docker/blob/7a1cdd5dd426ae782d7304ab8af476855790186a/documentation/image-variants.md)).
+- **Native AOT templates.** Native AOT does not require invariant mode, but the .NET 10
+  project templates for it turn it on. `dotnet new console --aot`, `dotnet new worker --aot`
+  and `dotnet new webapiaot` all set `<InvariantGlobalization>true</InvariantGlobalization>`
+  ([console](https://github.com/dotnet/sdk/blob/fd7d9df34dec5bf71ff2ad9869335644a33b9925/template_feed/Microsoft.DotNet.Common.ProjectTemplates.10.0/content/ConsoleApplication-CSharp/Company.ConsoleApplication1.csproj), [worker](https://github.com/dotnet/aspnetcore/blob/0ef4bbfa3291b306a21e5001cb0491277bdd35bc/src/ProjectTemplates/Web.ProjectTemplates/Worker-CSharp.csproj.in),
+  [webapiaot](https://github.com/dotnet/aspnetcore/blob/0ef4bbfa3291b306a21e5001cb0491277bdd35bc/src/ProjectTemplates/Web.ProjectTemplates/WebApiAot-CSharp.csproj.in)).
+
+So the same code can be exact on a developer's machine and wrong in one of those images.
 
 ## The numbers
 

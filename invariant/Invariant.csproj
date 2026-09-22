@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <!-- As in chiseled, Alpine and Native AOT images. Run with -p:InvariantGlobalization=false to compare. -->
+    <!-- As in Alpine and Ubuntu Chiseled images and the Native AOT templates. Run with -p:InvariantGlobalization=false to compare. -->
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 </Project>

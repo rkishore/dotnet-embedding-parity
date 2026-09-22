@@ -172,7 +172,7 @@ dotnet run --project elbruno -c Release -- texts.json .cache/elbruno results/elb
 dotnet run --project lmsupply -c Release -- texts.json .cache/lmsupply results/lmsupply.json
 python3 compare.py results/reference.json results/{sk,elbruno,lmsupply}.json > results/summary.md
 
-# Invariant globalization, the configuration of chiseled, Alpine and Native AOT images
+# Invariant globalization, the configuration of Alpine and Ubuntu Chiseled images and of the Native AOT templates
 I=results/invariant-globalization
 dotnet run --project sk -c Release -p:InvariantGlobalization=true -- texts.json model/model.onnx model/vocab.txt $I/sk.json
 dotnet run --project elbruno -c Release -p:InvariantGlobalization=true -- texts.json .cache/elbruno $I/elbruno.json
