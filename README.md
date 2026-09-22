@@ -1,16 +1,18 @@
 # dotnet-embedding-parity
 
-The evidence behind one blog post: a learning experiment, not a product.
+As part of a learning experiment, three .NET embedding libraries were run against a
+reference implementation of `sentence-transformers/all-MiniLM-L6-v2`. The reference is
+checked against sentence-transformers itself. This repository holds the probes, the
+runners, their results, the predictions written before they ran, and two follow-ups: a
+measurement of `Microsoft.ML.Tokenizers` under invariant globalization, and a
+retrieval-recall experiment.
+
+All three libraries we measured diverge from sentence-transformers in at least one
+configuration, and every divergence is in tokenization.
 
 > The divergence lives before the input tensor. Every parity tool in every ecosystem
 > starts at the tensor; .NET embedding libraries go wrong in tokenization, and one class
 > of failure depends on the deployment image, not the code.
-
-Three .NET embedding libraries were run against a reference implementation of
-`sentence-transformers/all-MiniLM-L6-v2`. The reference is checked against
-sentence-transformers itself. This repository holds the probes, the runners, their
-results, the predictions written before they ran, and two follow-ups: a measurement of
-`Microsoft.ML.Tokenizers` under invariant globalization, and a retrieval-recall experiment.
 
 ## What it shows
 
@@ -26,8 +28,6 @@ results, the predictions written before they ran, and two follow-ups: a measurem
   LMSupply, re-embedding each library's own token ids reproduces its vectors at 1.000000.
   SK is exact under ICU. Its invariant-mode vectors are reproduced at ≥ 0.99999 by the
   reference tokenizer with accent stripping turned off.
-- **The author's own library had the same defects as ElBruno.** Its source and results are
-  not in this repository.
 - **Under invariant globalization, `String.Normalize(FormD)` returns its input unchanged,
   by [documented design](https://github.com/dotnet/runtime/blob/6f4751a142ca0e879d60cb4091356bb9d346143e/docs/design/features/globalization-invariant-mode.md#string-normalization).**
   A tokenizer that strips accents through it degrades silently. SK is measured. So is
