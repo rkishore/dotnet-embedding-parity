@@ -10,9 +10,9 @@ retrieval-recall experiment.
 All three libraries we measured diverge from sentence-transformers in at least one
 configuration, and every divergence is in tokenization.
 
-> The divergence lives before the input tensor. Every parity tool in every ecosystem
-> starts at the tensor; .NET embedding libraries go wrong in tokenization, and one class
-> of failure depends on the deployment image, not the code.
+> The divergence lives before the input tensor. The .NET embedding libraries measured here
+> go wrong in tokenization, and one class of failure depends on the deployment image, not
+> the code.
 
 ## What it shows
 
