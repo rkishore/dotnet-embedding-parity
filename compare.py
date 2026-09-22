@@ -11,7 +11,7 @@ import json
 import math
 import sys
 
-THRESHOLD = 0.9999  # the same bar as bench/scripts/_preflight_cosine.py
+THRESHOLD = 0.9999  # "agrees": the bar PREDICTIONS.md set before the run
 
 
 def cosine(a, b):

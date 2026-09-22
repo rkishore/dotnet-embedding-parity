@@ -121,8 +121,9 @@ bash model/fetch.sh    # model.onnx at revision 1110a24, sha256-checked against 
   `dotnet run --project invariant` refuses to start, and
   `dotnet run --project invariant -p:InvariantGlobalization=false` does not.
 
-The committed results were produced on macOS arm64 with .NET 10.0.12. A re-run on the same
-machine on 2026-09-21 reproduced every vector bit for bit.
+Every committed result was produced by this repository's own runners and scripts, on
+macOS arm64 with .NET 10.0.12. They reproduce, bit for bit, the vectors of the original run
+that `PREDICTIONS.md` was written for.
 
 ## Upstream reports
 

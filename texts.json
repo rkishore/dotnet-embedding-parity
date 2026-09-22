@@ -8,7 +8,7 @@
     },
     {
       "id": "medium",
-      "why": "existing oracle-gate probe from bench/scripts/_preflight_cosine.py",
+      "why": "plain ASCII sentence of common words",
       "text": "benchmark test sentence for embedding generation"
     },
     {

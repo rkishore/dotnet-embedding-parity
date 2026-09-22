@@ -6,7 +6,7 @@ Cosine below 0.9999 is **bold**.
 ## Semantic Kernel Connectors.Onnx 1.80.1-alpha+d8ec44919265b3641b7898a02038cbfe14590ee5
 
 - ONNX Runtime: 1.23.2+a83fc4d58cb48eb68890dd689f94f28288cf2278
-- Model file: `tests/TestAssets/all-MiniLM-L6-v2/model.onnx`, sha256 `6fd5d72fe458` (identical to reference)
+- Model file: `model/model.onnx`, sha256 `6fd5d72fe458` (identical to reference)
 - Configuration: {'PoolingMode': 'Mean', 'NormalizeEmbeddings': 'False', 'MaximumTokens': '512', 'CaseSensitive': 'False', 'UnicodeNormalization': 'FormD'}
 
 | text | tokens@256 | cos vs ref@256 | cos vs ref@512 | L2 norm | batch vs single |
@@ -25,7 +25,7 @@ Cosine below 0.9999 is **bold**.
 ## ElBruno.LocalEmbeddings 1.6.1+558380032734f9ce5a18be45c1937e11b27fa81a
 
 - ONNX Runtime: 1.24.4+2d924974ef147392ced8409d36bd6d2e7fcc8a74
-- Model file: `bench/oracle-competitors/.cache/elbruno/sentence-transformers_all-MiniLM-L6-v2/model.onnx`, sha256 `6fd5d72fe458` (identical to reference)
+- Model file: `.cache/elbruno/sentence-transformers_all-MiniLM-L6-v2/model.onnx`, sha256 `6fd5d72fe458` (identical to reference)
 - Configuration: {'ModelName': 'sentence-transformers/all-MiniLM-L6-v2', 'MaxSequenceLength': '512', 'NormalizeEmbeddings': 'False', 'PreferQuantized': 'False'}
 
 | text | tokens@256 | cos vs ref@256 | cos vs ref@512 | L2 norm | batch vs single |
