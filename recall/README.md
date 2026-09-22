@@ -23,7 +23,8 @@ for c in miracl-fr miracl-es miracl-de msmarco; do
   $PREP recall/prepare.py --corpus $c
   $RUN recall/run.py --corpus $c
 done
-$RUN recall/unk_share.py    # the post-hoc [UNK] count in RESULTS.md
+$RUN recall/unk_share.py    # post hoc: the [UNK] share of passage tokens
+$RUN recall/posthoc.py > recall/results/posthoc.json    # post hoc: MS MARCO mojibake, query-side counts
 ```
 
 Results and the scored predictions: [`RESULTS.md`](RESULTS.md).

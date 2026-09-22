@@ -83,19 +83,28 @@ Hugging Face and by cosine after embedding
 
 A cosine of 0.333 on one sentence is a vector-level number. [`recall/`](recall/) asks what
 a missing accent-stripping step costs retrieval. It compares two tokenizers that differ
-only in whether they strip accents, with the default English model and 300,000-passage
-subsamples, and reports recall@10 as a relative change
-([`recall/RESULTS.md`](recall/RESULTS.md)):
+only in whether they strip accents, using the default English model and 300,000-passage
+subsamples ([`recall/RESULTS.md`](recall/RESULTS.md)):
 
-| corpus | recall@10, correct → unstripped | relative change (95% interval) |
-|---|--:|--:|
-| MIRACL French | 0.409 → 0.264 | **−35.5%** (−43.0% to −27.5%) |
-| MIRACL Spanish | 0.282 → 0.221 | **−21.6%** (−27.7% to −15.3%) |
-| MIRACL German | 0.279 → 0.276 | −1.0% (−9.4% to +7.8%) |
-| MS MARCO (English) | 0.913 → 0.909 | −0.5% (−0.7% to −0.2%) |
+| corpus | recall@10, correct | recall@10, unstripped | absolute change | relative change (95% interval) |
+|---|--:|--:|--:|--:|
+| MIRACL French | 0.409 | 0.264 | −14.5 points | **−35.5%** (−43.0% to −27.5%) |
+| MIRACL Spanish | 0.282 | 0.221 | −6.1 points | **−21.6%** (−27.7% to −15.3%) |
+| MIRACL German | 0.279 | 0.276 | −0.3 points | −1.0% (−9.4% to +7.8%): inconclusive |
+| MS MARCO (English) | 0.913 | 0.909 | −0.4 points | −0.5% (−0.7% to −0.2%) |
 
-The predictions were committed before the code. Four of six were met. German was
-predicted to drop by at least 5% and did not show a measurable drop.
+- **The baselines are low.** An English model finds only 28–41% of the relevant French,
+  Spanish and German passages in its top 10, even with correct tokenization. The design
+  fixed the relative change in advance as the headline, because a given absolute loss is a
+  larger share of a weak baseline. The absolute numbers are beside it so the relative
+  figure can be checked.
+- **German is inconclusive, not unaffected.** Its interval holds both a 9% loss and an 8%
+  gain.
+- **MS MARCO is an encoding control, not an accent control.** Its only non-ASCII text is
+  mojibake, and no relevant passage contains a genuine accented character.
+
+The predictions were committed before the code. Four of six were met. German was predicted
+to drop by at least 5%, and the result can neither confirm nor rule that out.
 
 ## Method
 

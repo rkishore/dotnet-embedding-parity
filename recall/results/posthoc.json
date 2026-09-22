@@ -1,0 +1,36 @@
+{
+  "msmarco_mojibake": {
+    "passages": 300000,
+    "passages_tokenized_differently": 68981,
+    "of_which_contain_mojibake": 68981,
+    "of_which_still_differ_with_mojibake_removed": 0,
+    "queries_in_preregistered_subset": 1641,
+    "queries_with_a_genuinely_accented_relevant_passage": 0
+  },
+  "query_side": {
+    "miracl-fr": {
+      "queries": 343,
+      "queries_with_an_unk": 0.5801749271137027,
+      "mean_unk_tokens_per_query": 0.8688046647230321,
+      "unk_share_of_query_tokens": 0.06912549292507539
+    },
+    "miracl-es": {
+      "queries": 648,
+      "queries_with_an_unk": 1.0,
+      "mean_unk_tokens_per_query": 1.9259259259259258,
+      "unk_share_of_query_tokens": 0.14008306207206195
+    },
+    "miracl-de": {
+      "queries": 305,
+      "queries_with_an_unk": 0.39344262295081966,
+      "mean_unk_tokens_per_query": 0.4721311475409836,
+      "unk_share_of_query_tokens": 0.03323332564043388
+    },
+    "msmarco": {
+      "queries": 6980,
+      "queries_with_an_unk": 0.0,
+      "mean_unk_tokens_per_query": 0.0,
+      "unk_share_of_query_tokens": 0.0
+    }
+  }
+}
