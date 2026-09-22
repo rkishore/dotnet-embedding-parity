@@ -104,8 +104,10 @@ subsamples ([`recall/RESULTS.md`](recall/RESULTS.md)):
 - **MS MARCO is an encoding control, not an accent control.** Its only non-ASCII text is
   mojibake, and no relevant passage contains a genuine accented character.
 
-The predictions were committed before the code. Four of six were met. German was predicted
-to drop by at least 5%, and the result can neither confirm nor rule that out.
+The predictions were thresholds, recorded before any code existed: a relative drop of at
+least 10% for French and at least 5% for Spanish and German. French and Spanish met them.
+German can neither confirm nor rule out its 5%. Four of six predictions were met in all
+([`recall/PREDICTIONS.md`](recall/PREDICTIONS.md)).
 
 ## Method
 
