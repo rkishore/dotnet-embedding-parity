@@ -1,0 +1,36 @@
+{
+  "corpus": "miracl-de",
+  "passages": 300000,
+  "queries": 305,
+  "passages_tokenized_differently": 0.8693433333333334,
+  "queries_tokenized_differently": 0.39344262295081966,
+  "recall_at_10": {
+    "correct": 0.2784894613583138,
+    "unstripped": 0.27566744730679155
+  },
+  "relative_change": -0.010133288483370584,
+  "interval95": [
+    -0.0940618536091373,
+    0.07773253753029637
+  ],
+  "subset_accented_relevant_passage": {
+    "queries": 302,
+    "recall_correct": 0.2779446546830653,
+    "recall_unstripped": 0.2750946073793756,
+    "relative_change": -0.010254010126366953,
+    "interval95": [
+      -0.09718455240631187,
+      0.07856432696451633
+    ]
+  },
+  "setup": {
+    "max_len": 256,
+    "k": 10,
+    "bootstrap": 10000,
+    "seed": 20260921,
+    "onnxruntime": "1.22.0",
+    "numpy": "2.2.5",
+    "arms_check_unstripped_vs_elbruno_accents": 0.9999999620309037,
+    "embed_seconds": 5086
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "corpus": "msmarco",
+  "passages": 300000,
+  "queries": 6980,
+  "passages_tokenized_differently": 0.22993666666666668,
+  "queries_tokenized_differently": 0.0,
+  "recall_at_10": {
+    "correct": 0.9133476599808977,
+    "unstripped": 0.9090735434574976
+  },
+  "relative_change": -0.00467961621918378,
+  "interval95": [
+    -0.007366421707780996,
+    -0.001983610913804013
+  ],
+  "subset_accented_relevant_passage": {
+    "queries": 1641,
+    "recall_correct": 0.8929006703229738,
+    "recall_unstripped": 0.8753300832825512,
+    "relative_change": -0.01967809816299848,
+    "interval95": [
+      -0.030119161943109315,
+      -0.009445706484118124
+    ]
+  },
+  "setup": {
+    "max_len": 256,
+    "k": 10,
+    "bootstrap": 10000,
+    "seed": 20260921,
+    "onnxruntime": "1.22.0",
+    "numpy": "2.2.5",
+    "arms_check_unstripped_vs_elbruno_accents": 0.9999999620309037,
+    "embed_seconds": 1196
+  }
+}

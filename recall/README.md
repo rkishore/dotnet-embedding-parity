@@ -23,4 +23,7 @@ for c in miracl-fr miracl-es miracl-de msmarco; do
   $PREP recall/prepare.py --corpus $c
   $RUN recall/run.py --corpus $c
 done
+$RUN recall/unk_share.py    # the post-hoc [UNK] count in RESULTS.md
 ```
+
+Results and the scored predictions: [`RESULTS.md`](RESULTS.md).
