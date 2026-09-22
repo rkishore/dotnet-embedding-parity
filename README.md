@@ -154,9 +154,6 @@ that `PREDICTIONS.md` was written for.
 - [dotnet/machinelearning#7728](https://github.com/dotnet/machinelearning/issues/7728):
   `RemoveNonSpacingMarks = true` fails to strip accents from precomposed characters under
   invariant globalization.
-- [dotnet/machinelearning#7728](https://github.com/dotnet/machinelearning/issues/7728):
-  `RemoveNonSpacingMarks = true` fails to strip accents from precomposed characters under
-  invariant globalization.
 - [elbruno/elbruno.localembeddings#56](https://github.com/elbruno/elbruno.localembeddings/issues/56):
   accented words become `[UNK]` with the default model.
 - [iyulab/lm-supply#12](https://github.com/iyulab/lm-supply/issues/12): embeddings diverge
