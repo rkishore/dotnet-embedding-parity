@@ -34,7 +34,8 @@ configuration, and every divergence is in tokenization.
   `Microsoft.ML.Tokenizers` 2.0.0 with `RemoveNonSpacingMarks = true`: under invariant mode
   the option does nothing on precomposed text, so `Café crème brûlée in São Paulo, naïve
   résumé` scores 0.333027, the same as with the option off. On text that arrives already
-  decomposed, it still works.
+  decomposed, it still works. Reported as
+  [dotnet/machinelearning#7728](https://github.com/dotnet/machinelearning/issues/7728).
 
 Invariant globalization is common where .NET is deployed:
 
@@ -150,6 +151,9 @@ that `PREDICTIONS.md` was written for.
   `BertTokenizer` merges words separated only by `\n`, `\t` or `\r`.
 - [dotnet/machinelearning#7725](https://github.com/dotnet/machinelearning/issues/7725):
   `BertTokenizer` silently drops symbol characters.
+- [dotnet/machinelearning#7728](https://github.com/dotnet/machinelearning/issues/7728):
+  `RemoveNonSpacingMarks = true` fails to strip accents from precomposed characters under
+  invariant globalization.
 - [elbruno/elbruno.localembeddings#56](https://github.com/elbruno/elbruno.localembeddings/issues/56):
   accented words become `[UNK]` with the default model.
 - [iyulab/lm-supply#12](https://github.com/iyulab/lm-supply/issues/12): embeddings diverge
