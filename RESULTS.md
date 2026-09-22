@@ -155,9 +155,9 @@ container images commonly run that way.
 ## Reproduce
 
 From the repository root, in bash: `$PY` relies on word splitting, which zsh does not do.
-`model/fetch.sh` downloads the pinned `model.onnx` and checks
-its sha256 against `results/reference.json`. ElBruno and LMSupply download the model
-themselves into `.cache/`.
+`model/fetch.sh` downloads the pinned `model.onnx` and checks its sha256 against
+`results/reference.json`. ElBruno and LMSupply download the model themselves into
+`.cache/`.
 
 ```sh
 bash model/fetch.sh
