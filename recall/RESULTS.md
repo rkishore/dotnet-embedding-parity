@@ -89,7 +89,7 @@ wide to say how large the effect is. The query counts are in
 - One model, the English all-MiniLM-L6-v2, is the realistic default but a weak one for
   these languages; the baselines are 0.28–0.41. A multilingual model would have different
   baselines, and was not tested.
-- Recall is measured on a 300,000-passage subsample, not the full corpora of 10–16 million
+- Recall is measured on a 300,000-passage subsample, not the full corpora of 8.8–16 million
   passages. Absolute recall on the full corpus would be lower. The relative change between
   arms is what the design compares, and both arms use the same subsample.
 - The unstripped arm reproduces ElBruno's and SK-under-invariant's accent handling, which
