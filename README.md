@@ -175,4 +175,6 @@ that `PREDICTIONS.md` was written for.
 | `recall/` | the retrieval-recall experiment |
 | `model/` | the vocabulary, and `fetch.sh` for the model |
 
-Licensed under Apache-2.0.
+Licensed under Apache-2.0. `model/vocab.txt` is redistributed unmodified from
+[`sentence-transformers/all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/blob/1110a243fdf4706b3f48f1d95db1a4f5529b4d41/vocab.txt)
+at revision `1110a24`, itself Apache-2.0.
